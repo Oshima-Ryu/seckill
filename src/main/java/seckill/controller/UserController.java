@@ -2,22 +2,20 @@ package seckill.controller;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import seckill.controller.viewobject.UserVO;
 import seckill.error.BusinessException;
 import seckill.error.EmBusinessError;
 import seckill.response.CommonReturnType;
 import seckill.service.UserModel;
-import seckill.service.UserService;
 import seckill.service.impl.UserServiceImpl;
 
 import javax.annotation.Resource;
 
+
 @Controller("user")
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseController{
 
     @Resource
     private UserServiceImpl userService;
@@ -33,7 +31,7 @@ public class UserController {
         return CommonReturnType.create(userVO);
     }
 
-    private UserVO convertFromModel(UserModel userModel) throws{
+    private UserVO convertFromModel(UserModel userModel){
         if(userModel == null){
             return null;
         }
