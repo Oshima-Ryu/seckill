@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import seckill.controller.viewobject.UserVO;
+import seckill.response.CommonReturnType;
 import seckill.service.UserModel;
 import seckill.service.UserService;
 import seckill.service.impl.UserServiceImpl;
@@ -21,9 +22,10 @@ public class UserController {
 
     @RequestMapping("/get")
     @ResponseBody
-    public UserVO getUser(@RequestParam(name="id")Integer id){
+    public CommonReturnType getUser(@RequestParam(name="id")Integer id){
         UserModel userModel = userService.getUserById(id);
-        return convertFromModel(userModel);
+        UserVO userVO = convertFromModel(userModel);
+        return CommonReturnType.create(userVO);
     }
 
     private UserVO convertFromModel(UserModel userModel){

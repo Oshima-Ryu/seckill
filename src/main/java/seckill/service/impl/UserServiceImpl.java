@@ -29,7 +29,6 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         UserPasswordDO userPasswordDO = userPasswordDOMapper.selectByUserId(userDO.getId());
-        System.out.println(userPasswordDO.getEncrptPassword());
         return convertFromDataObject(userDO, userPasswordDO);
     }
 
