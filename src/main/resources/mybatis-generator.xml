@@ -34,7 +34,7 @@
         enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false"></table>
 
-        <table tableName="user_password" domainObjectName="UserPasswordDA" enableCountByExample="false"
+        <table tableName="user_password" domainObjectName="UserPasswordDO" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false"></table>
 

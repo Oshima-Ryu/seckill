@@ -22,8 +22,8 @@ import javax.annotation.Resource;
 @MapperScan("seckill.dao")
 public class App 
 {
-//    @Resource
-    @Autowired
+    @Resource
+//    @Autowired
     private UserDOMapper userDOMapper;
 
     @RequestMapping("/")
