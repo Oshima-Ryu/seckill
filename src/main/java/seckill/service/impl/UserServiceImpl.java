@@ -55,6 +55,22 @@ public class UserServiceImpl implements UserService {
         userPasswordDOMapper.insertSelective(userPasswordDO);
     }
 
+    @Override
+    public UserModel validateLogin(String telphone, String encrptPassword) throws BusinessException {
+        UserDO userDO = userDOMapper.selectByTelphone(telphone);
+        if(userDO == null){
+            throw new BusinessException(EmBusinessError.USER_LOGIN_FAIL);
+        }
+        UserPasswordDO userPasswordDO = userPasswordDOMapper.selectByUserId(userDO.getId());
+        UserModel userModel = convertFromDataObject(userDO, userPasswordDO);
+
+        //对比信息
+        if(!StringUtils.equals(encrptPassword, userModel.getEncreptPassword())){
+            throw new BusinessException(EmBusinessError.USER_LOGIN_FAIL);
+        }
+        return userModel;
+    }
+
     private UserPasswordDO convertPasswordFromModel(UserModel userModel){
         if(userModel == null){
             return null;
