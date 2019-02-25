@@ -2,7 +2,6 @@ package seckill.controller;
 
 import com.alibaba.druid.util.StringUtils;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
-import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +9,7 @@ import seckill.controller.viewobject.UserVO;
 import seckill.error.BusinessException;
 import seckill.error.EmBusinessError;
 import seckill.response.CommonReturnType;
-import seckill.service.UserModel;
+import seckill.service.model.UserModel;
 import seckill.service.impl.UserServiceImpl;
 import sun.misc.BASE64Encoder;
 

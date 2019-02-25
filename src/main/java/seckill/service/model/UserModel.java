@@ -1,4 +1,4 @@
-package seckill.service;
+package seckill.service.model;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;

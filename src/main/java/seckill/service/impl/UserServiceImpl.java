@@ -2,7 +2,6 @@ package seckill.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import seckill.dao.UserDOMapper;
@@ -11,7 +10,7 @@ import seckill.dataobject.UserDO;
 import seckill.dataobject.UserPasswordDO;
 import seckill.error.BusinessException;
 import seckill.error.EmBusinessError;
-import seckill.service.UserModel;
+import seckill.service.model.UserModel;
 import seckill.service.UserService;
 import seckill.validator.ValidationResult;
 import seckill.validator.ValidatorImpl;

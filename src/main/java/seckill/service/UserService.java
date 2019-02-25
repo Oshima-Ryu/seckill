@@ -1,6 +1,7 @@
 package seckill.service;
 
 import seckill.error.BusinessException;
+import seckill.service.model.UserModel;
 
 public interface UserService {
     UserModel getUserById(Integer id);
