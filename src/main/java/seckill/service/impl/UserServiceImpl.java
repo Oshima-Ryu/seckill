@@ -13,6 +13,8 @@ import seckill.error.BusinessException;
 import seckill.error.EmBusinessError;
 import seckill.service.UserModel;
 import seckill.service.UserService;
+import seckill.validator.ValidationResult;
+import seckill.validator.ValidatorImpl;
 
 import javax.annotation.Resource;
 
@@ -25,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private UserPasswordDOMapper userPasswordDOMapper;
+
+    @Resource
+    private ValidatorImpl validator;
 
     @Override
     public UserModel getUserById(Integer id) {
@@ -42,12 +47,18 @@ public class UserServiceImpl implements UserService {
         if(userModel == null){
             throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
         }
-        if(StringUtils.isEmpty(userModel.getName())
-                || userModel.getGender() == null
-                || userModel.getAge() ==null
-                || StringUtils.isEmpty(userModel.getTelphone())){
-            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
+//        if(StringUtils.isEmpty(userModel.getName())
+//                || userModel.getGender() == null
+//                || userModel.getAge() ==null
+//                || StringUtils.isEmpty(userModel.getTelphone())){
+//            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
+//        }
+        ValidationResult result = validator.validate(userModel);
+        if(result.isHasErrors()){
+            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR, result.getErrorMsg());
         }
+
+
         UserDO userDO = convertFromModel(userModel);
         userDOMapper.insertSelective(userDO);
 
