@@ -35,7 +35,7 @@ public class ItemController extends BaseController {
         itemModel.setImgUrl(imgUrl);
         ItemModel itemModelForReturn = itemService.createItem(itemModel);
         ItemVO itemVO = convertVOFromModel(itemModel);
-        
+
         return CommonReturnType.create(itemVO);
     }
 
