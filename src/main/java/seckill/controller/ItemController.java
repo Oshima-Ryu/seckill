@@ -11,6 +11,8 @@ import seckill.service.model.ItemModel;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 
@@ -47,6 +49,17 @@ public class ItemController extends BaseController {
         ItemModel itemModel = itemService.getItemById(id);
         ItemVO itemVO = convertVOFromModel(itemModel);
         return CommonReturnType.create(itemVO);
+    }
+
+    @RequestMapping(value = "/list", method = {RequestMethod.GET})
+    @ResponseBody
+    public CommonReturnType listItem(){
+        List<ItemModel> itemModelList = itemService.listItem();
+        List<ItemVO> itemVOList = itemModelList.stream().map(itemModel -> {
+            ItemVO itemVO = convertVOFromModel(itemModel);
+            return itemVO;
+        }).collect(Collectors.toList());
+        return CommonReturnType.create(itemVOList);
     }
 
 
