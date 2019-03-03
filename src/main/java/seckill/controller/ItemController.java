@@ -22,7 +22,7 @@ public class ItemController extends BaseController {
     @Resource
     ItemServiceImpl itemService;
 
-    @RequestMapping(value = "/create", method = {RequestMethod.POST}, consumes = {CONTENT_TYPE})
+    @RequestMapping(value = "/create", method = {RequestMethod.POST})
     @ResponseBody
     public CommonReturnType createItem(@RequestParam(name = "title")String title,
                                        @RequestParam(name = "description")String description,
