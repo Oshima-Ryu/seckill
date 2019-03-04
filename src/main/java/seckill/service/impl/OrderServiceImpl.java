@@ -2,9 +2,12 @@ package seckill.service.impl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import seckill.dao.OrderDOMapper;
+import seckill.dao.SequenceDOMapper;
 import seckill.dataobject.OrderDO;
+import seckill.dataobject.SequenceDO;
 import seckill.error.BusinessException;
 import seckill.error.EmBusinessError;
 import seckill.service.ItemService;
@@ -16,6 +19,9 @@ import seckill.service.model.UserModel;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class OrderServiceImpl implements OrderService {
 
@@ -27,6 +33,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderDOMapper orderDOMapper;
+
+    @Resource
+    private SequenceDOMapper sequenceDOMapper;
 
     @Override
     @Transactional
@@ -59,19 +68,39 @@ public class OrderServiceImpl implements OrderService {
         orderModel.setOrderPrice(itemModel.getPrice().multiply(new BigDecimal(amount)));
 
         //生成交易流水号
+        orderModel.setId(generateOrderNo());
         OrderDO orderDO = convertFromOrderModel(orderModel);
         orderDOMapper.insertSelective(orderDO);
 
-        return null;
+        return orderModel;
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    private String generateOrderNo(){
+        //订单号有16位
+        StringBuilder stringBuilder = new StringBuilder();
+        // 前8位位时间信息，年月日
+        LocalDateTime now  = LocalDateTime.now();
+        String nowDate = now.format(DateTimeFormatter.ISO_DATE).replace("-","");
+        stringBuilder.append(nowDate);
 
-//    private String generateOrderNo(){
-//        //订单号有16位
-//        // 前8位位时间信息，年月日
-//        //中间6位为自增序列
-//        //最后2位为分库分表位
-//    }
+        //中间6位为自增序列
+        int sequnce = 0;
+        SequenceDO sequenceDO = sequenceDOMapper.getSequenceByName("order_info");
+        sequnce = sequenceDO.getCurrentValue();
+        sequenceDO.setCurrentValue(sequenceDO.getCurrentValue() + sequenceDO.getStep());
+        sequenceDOMapper.updateByPrimaryKeySelective(sequenceDO);
+        String sequenceStr = String.valueOf(sequnce);
+        for(int i=0; i<6-sequenceStr.length(); i++){
+            stringBuilder.append(0);
+        }
+        stringBuilder.append(sequenceStr);
+
+        //最后2位为分库分表位
+        stringBuilder.append("00");
+
+        return stringBuilder.toString();
+    }
 
     private OrderDO convertFromOrderModel(OrderModel orderModel){
         if(orderModel == null){
@@ -79,6 +108,6 @@ public class OrderServiceImpl implements OrderService {
         }
         OrderDO orderDO = new OrderDO();
         BeanUtils.copyProperties(orderModel, orderDO);
-        return orderDO
+        return orderDO;
     }
 }
