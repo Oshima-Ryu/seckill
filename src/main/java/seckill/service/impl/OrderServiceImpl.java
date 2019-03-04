@@ -2,6 +2,7 @@ package seckill.service.impl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import seckill.dao.OrderDOMapper;
@@ -23,6 +24,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+@Service
 public class OrderServiceImpl implements OrderService {
 
     @Resource
@@ -31,7 +33,7 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private UserService userService;
 
-    @Autowired
+    @Resource
     private OrderDOMapper orderDOMapper;
 
     @Resource
