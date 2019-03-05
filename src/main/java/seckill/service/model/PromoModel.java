@@ -8,6 +8,7 @@ public class PromoModel {
     private Integer id;
     private String promoName;
     private DateTime startDate;
+    private DateTime endDate;
     private Integer itemId;
     private BigDecimal promoPrice;
 
@@ -33,6 +34,14 @@ public class PromoModel {
 
     public void setStartDate(DateTime startDate) {
         this.startDate = startDate;
+    }
+
+    public DateTime getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(DateTime endDate) {
+        this.endDate = endDate;
     }
 
     public Integer getItemId() {
