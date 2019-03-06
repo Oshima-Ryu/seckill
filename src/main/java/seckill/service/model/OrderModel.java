@@ -6,6 +6,7 @@ public class OrderModel {
     private String id;
     private Integer userId;
     private Integer itemId;
+    private Integer promoId;
     private BigDecimal itemPrice;
     private Integer amount;
     private BigDecimal orderPrice;
@@ -32,6 +33,14 @@ public class OrderModel {
 
     public void setItemId(Integer itemId) {
         this.itemId = itemId;
+    }
+
+    public Integer getPromoId() {
+        return promoId;
+    }
+
+    public void setPromoId(Integer promoId) {
+        this.promoId = promoId;
     }
 
     public BigDecimal getItemPrice() {

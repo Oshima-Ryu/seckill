@@ -1,5 +1,6 @@
 package seckill.controller;
 
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -74,12 +75,12 @@ public class ItemController extends BaseController {
             //有正在进行的秒杀活动
             itemVO.setPromoStatus(itemModel.getPromoModel().getStatus());
             itemVO.setPromoId(itemModel.getPromoModel().getId());
-            itemVO.setStartDate(itemModel.getPromoModel().getStartDate());
+            itemVO.setStartDate(itemModel.getPromoModel().getStartDate().toString(DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")));
             itemVO.setPromoPrice(itemModel.getPromoModel().getPromoPrice());
         }else{
             itemVO.setPromoStatus(0);
         }
-        
+
         return itemVO;
     }
 }
