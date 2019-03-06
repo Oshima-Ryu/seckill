@@ -11,7 +11,9 @@ import seckill.dataobject.ItemStockDO;
 import seckill.error.BusinessException;
 import seckill.error.EmBusinessError;
 import seckill.service.ItemService;
+import seckill.service.PromoService;
 import seckill.service.model.ItemModel;
+import seckill.service.model.PromoModel;
 import seckill.validator.ValidationResult;
 import seckill.validator.ValidatorImpl;
 
@@ -31,6 +33,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Resource
     private ItemStockDOMapper itemStockDOMapper;
+
+    @Resource
+    private PromoService promoService;
 
     private ItemDO convertItemDOFromItemModel(ItemModel itemModel){
         if(itemModel == null){
@@ -95,6 +100,13 @@ public class ItemServiceImpl implements ItemService {
 
         //将dataobject->model
         ItemModel itemModel = convertModelFromDataobject(itemDo, itemStockDO);
+
+        //获取活动商品信息
+        PromoModel promoModel = promoService.getPromoByItemId(itemModel.getId());
+        if(promoModel != null && promoModel.getStatus().intValue() != 3){
+            itemModel.setPromoModel(promoModel);
+        }
+
 
         return itemModel;
     }
